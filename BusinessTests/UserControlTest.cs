@@ -82,7 +82,7 @@ namespace BusinessTests
             Assert.Throws<ArgumentException>(param, () => userControl.CreateNewUser(newUser));
         }
 
-        [Fact]
+        [Fact] 
         public void RetrieveUser_ShouldReturnList()
         {
             userList = userControl.RetrieveUserList();
