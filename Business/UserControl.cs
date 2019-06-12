@@ -13,66 +13,119 @@ namespace Business
     {
         UserRepo userRepo = new UserRepo();
         Regex regexPassword = new Regex(@"^(.{0,7}|[^0-9]*|[^A-Z])$");
+        List<User> userList = new List<User>(){
+            new User() { UserId = 1, Username = "Jejeje", Password = "Password123", FirstName = "Je-an", LastName = "Onting" },
+            new User() { UserId = 2, Username = "Myeli", Password = "Password123", FirstName = "Mel", LastName = "Meji" }
+        };
+    public List<User> GetUserList()
+        {
+            return userList;
+        }
 
-        public bool CreateNewUser(User user)
+        public void CreateNewUser(User user)
         {
             if (string.IsNullOrWhiteSpace(user.Username))
             {
-                return false;
+                throw new ArgumentException("You passed in an invalid parameter", "Username");
             }
 
             if (string.IsNullOrWhiteSpace(user.Password))
             {
-                return false;
+                throw new ArgumentException("You passed in an invalid parameter", "Password");
             }
+
 
             if (string.IsNullOrWhiteSpace(user.FirstName))
             {
-                return false;
+                throw new ArgumentException("You passed in an invalid parameter", "FirstName");
             }
 
             if (string.IsNullOrWhiteSpace(user.LastName))
             {
-                return false;
+                throw new ArgumentException("You passed in an invalid parameter", "LastName");
             }
 
-            userRepo.AddToList(user);
-            return true;
+            userList.Add(user);
+           //userRepo.AddToList(user);
+
         }
 
-        public List<User> RetrieveUser()
+        public List<User> RetrieveUserList()
         {
-            return userRepo.GetUserList();
+            return userList;
+            //return userRepo.GetUserList();
         }
-        public bool UpdateUser(User user)
-        {
-            User user_exist = userRepo.GetUserList().FirstOrDefault(u => u.UserId == user.UserId);
 
-            if (user_exist == null)
+        public User RetrieveUser(User user)
+        {
+            User user_exist = GetUserList().Find(u => u.UserId == user.UserId);
+            return user_exist;
+        }
+        public void UpdateUser(User user)
+        {
+            //User user_exist = userRepo.GetUserList().FirstOrDefault(u => u.UserId == user.UserId);
+            if (string.IsNullOrWhiteSpace(user.Username))
             {
-                return false;
+                throw new ArgumentException("You passed in an invalid parameter", "Username");
             }
 
-            userRepo.UpdateList(user);
-            return true;
-        }
-        public bool DeleteUser(User user)
-        {
-            User user_exist = userRepo.GetUserList().FirstOrDefault(u => u.UserId == user.UserId);
-
-            if (user_exist == null)
+            if (string.IsNullOrWhiteSpace(user.Password))
             {
-                return false;
+                throw new ArgumentException("You passed in an invalid parameter", "Password");
+            }
+
+
+            if (string.IsNullOrWhiteSpace(user.FirstName))
+            {
+                throw new ArgumentException("You passed in an invalid parameter", "FirstName");
+            }
+
+            if (string.IsNullOrWhiteSpace(user.LastName))
+            {
+                throw new ArgumentException("You passed in an invalid parameter", "LastName");
+            }
+
+            if (IsUserExist(user))
+            {
+                foreach (var ud_user in userList.Where(u => u.UserId == user.UserId))
+                {
+                    ud_user.UserId = user.UserId;
+                    ud_user.Username = user.Username;
+                    ud_user.FirstName = user.FirstName;
+                    ud_user.LastName = user.LastName;
+                    ud_user.Password = user.Password;
+
+                    //userRepo.UpdateList(user);
+
+                }
+            }
+
+            if (!IsUserExist(user))
+            {
 
             }
 
-            userRepo.RemoveToList(user);
-            return true;
+        }
+        public void DeleteUser(User user)
+        {
+            
+            if (IsUserExist(user))
+            {
+                userList.RemoveAll(u => u.UserId == user.UserId);
+                //userRepo.RemoveToList(user);
+            }
+
+            if (!IsUserExist(user))
+            {
+
+            }
+
         }
 
         public bool IsUserExist(User user)
         {
-            User user_exist = userRepo.GetUserList().FirstOrDefault(u => u.UserId == user.UserId);
+            //User user_exist = userRepo.GetUserList().FirstOrDefault(u => u.UserId == user.UserId);
+            User user_exist = GetUserList().Find(u => u.UserId == user.UserId);
 
             if (user_exist == null)
             {
