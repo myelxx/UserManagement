@@ -14,15 +14,6 @@ namespace Business
         UserRepo userRepo = new UserRepo();
         Regex regexPassword = new Regex(@"^(.{0,7}|[^0-9]*|[^A-Z])$");
 
-        //List<User> userList = new List<User>(){
-        //    new User() { UserId = 1, Username = "Jejeje", Password = "Password123", FirstName = "Je-an", LastName = "Onting" },
-        //    new User() { UserId = 2, Username = "Myeli", Password = "Password123", FirstName = "Mel", LastName = "Meji" }
-        //};
-        //public List<User> GetUserList()
-        //{
-        //    return userList;
-        //}
-
         public void CreateNewUser(User user)
         {
             if (string.IsNullOrWhiteSpace(user.Username))
@@ -65,26 +56,6 @@ namespace Business
         public void UpdateUser(User user)
         {
             //User user_exist = userRepo.GetUserList().FirstOrDefault(u => u.UserId == user.UserId);
-            if (string.IsNullOrWhiteSpace(user.Username))
-            {
-                throw new ArgumentException("You passed in an invalid parameter", "Username");
-            }
-
-            if (string.IsNullOrWhiteSpace(user.Password))
-            {
-                throw new ArgumentException("You passed in an invalid parameter", "Password");
-            }
-
-
-            if (string.IsNullOrWhiteSpace(user.FirstName))
-            {
-                throw new ArgumentException("You passed in an invalid parameter", "FirstName");
-            }
-
-            if (string.IsNullOrWhiteSpace(user.LastName))
-            {
-                throw new ArgumentException("You passed in an invalid parameter", "LastName");
-            }
 
             if (IsUserExist(user))
             {
@@ -99,10 +70,6 @@ namespace Business
                 userRepo.UpdateList(user);
             }
 
-            if (!IsUserExist(user))
-            {
-
-            }
 
         }
         public void DeleteUser(User user)
@@ -112,11 +79,6 @@ namespace Business
             {
                 //userList.RemoveAll(u => u.UserId == user.UserId);
                 userRepo.RemoveToList(user);
-            }
-
-            if (!IsUserExist(user))
-            {
-
             }
 
         }
