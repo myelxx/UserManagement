@@ -17,10 +17,10 @@ namespace BusinessTests
         UserControl userControl = new UserControl();
         UserRepo userRepo = new UserRepo();
 
-        public static IEnumerable<object[]> ValidUserData => new List<object[]>
-        {
-               new object[] {1, "Myoolz", "Password123", "Steve", "Carey"},
-        };
+        //public static IEnumerable<object[]> ValidUserData => new List<object[]>
+        //{
+        //       new object[] {1, "Myoolz", "Password123", "Steve", "Carey"},
+        //};
 
         [Theory]
         [InlineData("Alpha", true)] //valid
@@ -58,12 +58,12 @@ namespace BusinessTests
 
         
         [Theory]
-        [MemberData(nameof(ValidUserData))]
+        [InlineData(3, "Myelxx", "Password123", "Mel", "Meji")]
         public void CreateNewUser_ShouldWork(int userId, string userName, string password, string firstName, string lastName)
         {
             User newUser = new User { UserId = userId, Username = userName, Password = password, FirstName = firstName, LastName = lastName };
             userControl.CreateNewUser(newUser); //create
-            var actual = userControl.GetUserList(); //retrieve
+            var actual = userControl.RetrieveUserList(); //retrieve
 
             Assert.Contains(newUser, actual); //compare
             //Assert.Contains<User>(newUser, actual);
@@ -90,14 +90,13 @@ namespace BusinessTests
         }
 
         [Theory]
-        //[InlineData(1, "XXXXXXX", "MMMMMMMM", "MMMMMMMM", "MMMMMMMMM")]
-        [MemberData(nameof(ValidUserData))]
+        [InlineData(1, "XXXXXXX", "MMMMMMMM", "MMMMMMMM", "MMMMMMMMM")]
         public void UpdateUser_ShouldWork(int userId, string userName, string password, string firstName, string lastName)
         {
             User newUser = new User { UserId = userId, Username = userName, Password = password, FirstName = firstName, LastName = lastName };
             userControl.UpdateUser(newUser); 
 
-            var actual = userControl.GetUserList(); 
+            var actual = userControl.RetrieveUserList(); 
             User user_exist = actual.Find(u => u.UserId == userId);
 
             Assert.Equal(newUser.UserId, user_exist.UserId);
@@ -126,7 +125,7 @@ namespace BusinessTests
         {
             User newUser = new User { UserId = userId };
             userControl.DeleteUser(newUser);
-            var actual = userControl.GetUserList(); //retrieve list
+            var actual = userControl.RetrieveUserList(); //retrieve list
 
             Assert.DoesNotContain(newUser, actual);
         }

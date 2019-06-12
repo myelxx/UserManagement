@@ -9,22 +9,19 @@ namespace Repository
 {
     public class UserRepo
     {
-        List<User> userList = new List<User>(){
-                    new User() { UserId = 1, Username = "Jejeje", Password = "Password123", FirstName = "Je-an", LastName = "Onting" },
-                    new User() { UserId = 2, Username = "Myeli", Password = "Password123", FirstName = "Mel", LastName = "Meji" }
-        };
 
+        List<User> userList = new List<User>(){
+            new User() { UserId = 1, Username = "Jejeje", Password = "Password123", FirstName = "Je-an", LastName = "Onting" },
+            new User() { UserId = 2, Username = "Myeli", Password = "Password123", FirstName = "Mel", LastName = "Meji" }
+        };
 
         public List<User> GetUserList()
         {
             return userList;
         }
-
         public void AddToList(User user)
         {
-            User usernew = new User() { UserId = 1003, Username = "Myeli", Password = "Password123", FirstName = "Mel", LastName = "Meji" };
-
-            userList.Add(usernew);
+            userList.Add(user);
         }
 
         public void RemoveToList(User user)
