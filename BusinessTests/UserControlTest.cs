@@ -47,7 +47,7 @@ namespace BusinessTests
         }
 
         [Theory]
-        [InlineData(1, "XXXXXXX", "MMMMMMMM", "MMMMMMMM", "MMMMMMMMM")]
+        [InlineData(1, "Myelxx", "Password123", "Melrose", "Mejidana")]
         public void UpdateUser_ShouldWork(int userId, string userName, string password, string firstName, string lastName)
         {
             User newUser = new User { UserId = userId, Username = userName, Password = password, FirstName = firstName, LastName = lastName };

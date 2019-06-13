@@ -8,11 +8,10 @@ using System.Threading.Tasks;
 
 namespace Business
 {
+
     public class MoqUserControl
     {
-        UserRepo userRepo = new UserRepo();
 
-        //MOQ
         IRepository repository;
         public MoqUserControl(IRepository repository)
         {
@@ -21,16 +20,13 @@ namespace Business
 
         public void CreateNewUser(User user)
         {
-            userRepo.AddToList(user);
+            repository.AddToList(user);
+        }
 
-        }
-        public void DisplayUserList()
-        {
-            var userList = repository.GetUserList();
-            foreach (var user in userList)
-            {
-                Console.WriteLine(user.Username);
-            }
-        }
+        //public List<User> DisplayUserList()
+        //{
+        //    var userList = repository.GetUserList();
+        //    return userList;
+        //}
     }
 }

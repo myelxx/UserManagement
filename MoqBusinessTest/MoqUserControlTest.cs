@@ -5,6 +5,7 @@ using Domain;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Moq;
 using Repository;
+using Xunit;
 
 namespace MoqBusinessTest
 {
@@ -29,19 +30,19 @@ namespace MoqBusinessTest
 
             mockRepo.Setup(r => r.AddToList(user));
             var userControl = new MoqUserControl(mockRepo.Object);
-
+            userControl.CreateNewUser(user);
         }
 
-        [TestMethod]
-        public void DisplayUserList()
-        {
-            List<User> userList = new List<User>();
-            Mock<IRepository> mockRepo = new Mock<IRepository>();
+        //[TestMethod]
+        //public void DisplayUserList()
+        //{
+        //    List<User> userList = new List<User>();
+        //    Mock<IRepository> mockRepo = new Mock<IRepository>();
 
-            mockRepo.Setup(r => r.GetUserList()).Returns(userList);
-            var userControl = new MoqUserControl(mockRepo.Object);
+        //    mockRepo.Setup(r => r.GetUserList()).Returns(userList);
+        //    var userControl = new MoqUserControl(mockRepo.Object);
 
-            userControl.DisplayUserList();
-        }
+        //    userControl.DisplayUserList();
+        //}
     }
 }
