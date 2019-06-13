@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace Repository
 {
-    public class UserRepo
+    public class UserRepo : IRepository
     {
 
         List<User> userList = new List<User>(){

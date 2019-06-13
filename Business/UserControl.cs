@@ -12,7 +12,7 @@ namespace Business
     public class UserControl
     {
         UserRepo userRepo = new UserRepo();
-        Regex regexPassword = new Regex(@"^(.{0,7}|[^0-9]*|[^A-Z])$");
+        Regex regexPassword = new Regex("(?!^[0-9]*$)(?!^[a-zA-Z]*$)^(.{5,25})$");
 
         public void CreateNewUser(User user)
         {
@@ -56,17 +56,8 @@ namespace Business
         public void UpdateUser(User user)
         {
             //User user_exist = userRepo.GetUserList().FirstOrDefault(u => u.UserId == user.UserId);
-
             if (IsUserExist(user))
             {
-                //foreach (var ud_user in userList.Where(u => u.UserId == user.UserId))
-                //{
-                //    ud_user.UserId = user.UserId;
-                //    ud_user.Username = user.Username;
-                //    ud_user.FirstName = user.FirstName;
-                //    ud_user.LastName = user.LastName;
-                //    ud_user.Password = user.Password;
-                //}
                 userRepo.UpdateList(user);
             }
 
@@ -107,17 +98,12 @@ namespace Business
 
         public bool IsPasswordValid(string password)
         {
-            if (regexPassword.IsMatch(password))
+            if (regexPassword.IsMatch(password) && password.Length > 5)
             {
-                return false;
+                return true;
             }
 
-            if (password.Length < 5 )
-            {
-                return false;
-            }
-
-            return true;
+            return false;
         }
     }
 }

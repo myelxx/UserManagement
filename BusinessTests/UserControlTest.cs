@@ -17,46 +17,6 @@ namespace BusinessTests
         UserControl userControl = new UserControl();
         UserRepo userRepo = new UserRepo();
 
-        //public static IEnumerable<object[]> ValidUserData => new List<object[]>
-        //{
-        //       new object[] {1, "Myoolz", "Password123", "Steve", "Carey"},
-        //};
-
-        [Theory]
-        [InlineData("Alpha", true)] //valid
-        [InlineData("o", false)] //invalid
-        public void CheckIfUsernameIsValid(string userName, bool isValid)
-        {
-            bool expected = userControl.IsUsernameValid(userName);
-            bool actual = isValid;
-
-            Assert.Equal(expected, actual);
-        }
-
-        [Theory]
-        [InlineData("Password123", true)]
-        [InlineData("password", false)]
-        public void CheckIfPasswordIsValid(string password, bool isValid)
-        {
-            bool actual = userControl.IsPasswordValid(password);
-            bool expected = isValid;
-
-            Assert.Equal(expected, actual);
-        }
-
-        [Theory]
-        [InlineData(1, true)] //valid
-        [InlineData(4, false)] //invalid
-        public void CheckIsUserExist(int userId, bool isUserExist)
-        {
-            User newUser = new User() { UserId = userId };
-            bool actual = userControl.IsUserExist(newUser); 
-            bool expected = isUserExist; 
-
-            Assert.Equal(expected, actual);
-        }
-
-        
         [Theory]
         [InlineData(3, "Myelxx", "Password123", "Mel", "Meji")]
         public void CreateNewUser_ShouldWork(int userId, string userName, string password, string firstName, string lastName)
@@ -64,9 +24,7 @@ namespace BusinessTests
             User newUser = new User { UserId = userId, Username = userName, Password = password, FirstName = firstName, LastName = lastName };
             userControl.CreateNewUser(newUser); //create
             var actual = userControl.RetrieveUserList(); //retrieve
-
             Assert.Contains(newUser, actual); //compare
-            //Assert.Contains<User>(newUser, actual);
         }
 
         [Theory]
@@ -78,7 +36,6 @@ namespace BusinessTests
         public void CreateNewUser_ShouldFail(string userName, string password, string firstName, string lastName, string param)
         {
             User newUser = new User { Username = userName, Password = password, FirstName = firstName, LastName = lastName };
-            //Assert.False(userControl.CreateNewUser(newUser));
             Assert.Throws<ArgumentException>(param, () => userControl.CreateNewUser(newUser));
         }
 
@@ -104,7 +61,6 @@ namespace BusinessTests
             Assert.Equal(newUser.LastName, user_exist.LastName);
             Assert.Equal(newUser.Username, user_exist.Username);
             Assert.Equal(newUser.Password, user_exist.Password);
-            //Assert.Contains(newUser, actual);
         }
 
         [Theory]
@@ -127,7 +83,7 @@ namespace BusinessTests
             userControl.DeleteUser(newUser);
             var actual = userControl.RetrieveUserList(); //retrieve list
 
-            Assert.DoesNotContain(newUser, actual);
+            Assert.DoesNotContain(newUser, actual); 
         }
 
         [Theory]
@@ -141,6 +97,43 @@ namespace BusinessTests
             User actual = userControl.RetrieveUser(newUser);
             Assert.Null(actual);
         }
+
+
+        #region Validation
+        [Theory]
+        [InlineData("Alpha", true)] //valid
+        [InlineData("o", false)] //invalid
+        public void CheckIfUsernameIsValid(string userName, bool isValid)
+        {
+            bool expected = userControl.IsUsernameValid(userName);
+            bool actual = isValid;
+
+            Assert.Equal(expected, actual);
+        }
+
+        [Theory]
+        [InlineData("Password123", true)]
+        [InlineData("password", false)]
+        public void CheckIfPasswordIsValid(string password, bool isValid)
+        {
+            bool actual = userControl.IsPasswordValid(password);
+            bool expected = isValid;
+
+            Assert.Equal(expected, actual);
+        }
+
+        [Theory]
+        [InlineData(1, true)]
+        [InlineData(4, false)]
+        public void CheckIsUserExist(int userId, bool isUserExist)
+        {
+            User newUser = new User() { UserId = userId };
+            bool actual = userControl.IsUserExist(newUser);
+            bool expected = isUserExist;
+
+            Assert.Equal(expected, actual);
+        } 
+        #endregion
 
     }
 }
